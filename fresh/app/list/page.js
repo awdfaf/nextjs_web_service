@@ -44,6 +44,8 @@ export default function Home() {
                 let copy = [...수량]
                 copy[i]--
                 수량변경(copy) }}>-</button>
+
+                
             </div>
           )
         })

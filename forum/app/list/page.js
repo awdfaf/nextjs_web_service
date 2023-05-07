@@ -1,23 +1,28 @@
 import { connectDB } from "@/util/database"
 
+import DetailLink from "./DetailLink"
+import ListItem from "./ListItem"
+
+export const dynamic = 'force-dynamic'
+
 export default async function List() {
 
     const db = (await connectDB).db("forum")
     let result = await db.collection('post').find().toArray()
 
+    // Convert ObjectId to string
+    result = result.map(item => {
+        return {
+            ...item,
+            _id: item._id.toString()
+        }
+    })
 
+
+    
     return (
         <div className="list-bg">
-            {
-                result.map((a,i)=>{
-                    return(
-                        <div className="list-item">
-                            <h4>{result[i].title}</h4>
-                            <p>{result[i].content}</p>
-                        </div>
-                    )
-                })
-            }
+            <ListItem result={result} />
         </div>
-    )
+        )
     }
